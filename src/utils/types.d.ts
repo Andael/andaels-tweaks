@@ -44,7 +44,7 @@ interface TokenConfig {
 
 interface TokenDocument {
     flags: {
-        'andaels-token-tools'?: {
+        'andaels-tweaks'?: {
             offset?: { x?: number, y?: number }
         }
     }
