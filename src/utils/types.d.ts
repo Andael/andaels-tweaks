@@ -73,3 +73,9 @@ declare namespace ui.notifications {
     const error: NotifyFunction
     const warn: NotifyFunction
 }
+
+declare namespace foundry.applications.elements {
+    class HTMLColorPickerElement {
+        value: string
+    }
+}
