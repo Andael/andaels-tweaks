@@ -28,15 +28,16 @@ function onFormInput(evt)
     if (!(input instanceof HTMLInputElement))
         return
 
-    // Text fields used to enter colors require some special logic:
-    if (input.type == 'text' && input.classList.contains('color'))
+    // Color pickers are custom elements so need special handling:
+    if (input.parentElement instanceof foundry.applications.elements.HTMLColorPickerElement)
     {
         // Ignore incomplete text (let the user finish typing):
         if (!foundry.data.validators.isColorString(input.value))
             return
 
-        // Update the associated color picker:
-        $(input).siblings('[type=color]').val(input.value)
+        // Update the color picker itself:
+        input.parentElement.value = input.value
+        return
     }
 
     // Trick Foundry into updating the preview:
