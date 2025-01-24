@@ -25,14 +25,14 @@ export function addFieldsTo(app)
         <div class='form-group'>
             <label>X Offset <span class='units'>(Ratio)</span></label>
             <div class='form-fields'>
-                <input type='range' name='flags.andaels-token-tools.offset.x' value='${offset.x}' min='0' max='1' step='0.01' data-dtype='Number'>
+                <input type='range' name='flags.andaels-tweaks.offset.x' value='${offset.x}' min='0' max='1' step='0.01' data-dtype='Number'>
                 <span class='range-value'>${offset.x}</span>
             </div>
         </div>
         <div class='form-group'>
             <label>Y Offset <span class='units'>(Ratio)</span></label>
             <div class='form-fields'>
-                <input type='range' name='flags.andaels-token-tools.offset.y' value='${offset.y}' min='0' max='1' step='0.01' data-dtype='Number'>
+                <input type='range' name='flags.andaels-tweaks.offset.y' value='${offset.y}' min='0' max='1' step='0.01' data-dtype='Number'>
                 <span class='range-value'>${offset.y}</span>
             </div>
         </div>`)
@@ -73,5 +73,5 @@ export function refreshPivot(token)
  */
 function getOffset(token)
 {
-    return token.flags['andaels-token-tools']?.offset
+    return token.flags['andaels-tweaks']?.offset
 }

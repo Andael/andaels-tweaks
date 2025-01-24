@@ -1,5 +1,5 @@
 {
-  "name": "andaels-token-tools",
+  "name": "andaels-tweaks",
   "compatibility": {
     "minimum": "10.285",
     "verified": "10.285"
@@ -9,13 +9,13 @@
     "src/main.js"
   ],
 
-  "title": "Andael’s Token Tools",
+  "title": "Andael’s Tweaks",
   "description": "A new module.",
   "authors": [{
     "name": "Andael",
     "url": "https://github.com/Andael"
   }],
-  "url": "https://github.com/Andael/andaels-token-tools",
+  "url": "https://github.com/Andael/andaels-tweaks",
 
   "version": "develop"
 }

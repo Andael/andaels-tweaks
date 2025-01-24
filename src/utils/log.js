@@ -3,7 +3,7 @@
  * with this module’s name.
  */
 
-const PREFACE = ['%cAndael’s Token Tools%c %s', 'font: bold 1.1em sans-serif', '']
+const PREFACE = ['%cAndael’s Tweaks%c %s', 'font: bold 1.1em sans-serif', '']
 
 /**
  * Writes information to the console.
@@ -23,7 +23,7 @@ function log(...output)
 log.error = function(...output)
 {
     console.error(...PREFACE, ...output)
-    ui.notifications.warn('Andael’s Token Tools encountered an error. Check the JS console for details.', { console: false })
+    ui.notifications.warn('Andael’s Tweaks encountered an error. Check the JS console for details.', { console: false })
 }
 
 export default log
