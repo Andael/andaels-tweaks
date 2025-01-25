@@ -12,66 +12,49 @@ import log from '../utils/log.js'
  */
 export function addFieldsTo(app)
 {
-    // Find the ‘scale’ slider, since we’ll be adding the offset fields underneath that:
-    const scaleField = app.element.find('[name=scale]').closest('.form-group')
-    if (scaleField.length == 0)
-        return log.error('‘scale’ field could not be found')
+    // Find the textboxes for X and Y anchor:
+    const xAnchor = app.element.find('[name="texture.anchorX"]')
+    if (xAnchor.length != 1 || !(xAnchor[0] instanceof HTMLInputElement))
+        return log.error('X Anchor field not found')
+    const yAnchor = app.element.find('[name="texture.anchorY"]')
+    if (yAnchor.length != 1 || !(yAnchor[0] instanceof HTMLInputElement))
+        return log.error('Y Anchor field not found')
 
-    // Get the current value of the offset fields:
-    const offset = { x: 0.5, y: 0.5, ...getOffset(app.token) }
+    // Find the form group containing those fields:
+    const anchorGroup = xAnchor.closest('.form-group')
+    if (anchorGroup[0] != yAnchor.closest('.form-group')[0])
+        return log.error('X and Y Anchor were not in the same form group')
 
-    // Add the offset fields:
-    scaleField.after(`
+    // Update the section header if there is one (e.g. in the PF2e system):
+    anchorGroup.closest('fieldset').find('legend').text(function(_, str)
+    {
+        return str == 'Size' ? 'Size / Anchor' : ''
+    })
+
+    // Read initial values from the initially-rendered HTML. This method is better than using
+    // `app.token` as it supports re-renders (e.g. when toggling size lock in the PF2e system).
+    const texture = {
+        anchorX: xAnchor[0].valueAsNumber,
+        anchorY: yAnchor[0].valueAsNumber,
+    }
+
+    // Replace the textboxes with sliders:
+    anchorGroup.replaceWith(`
         <div class='form-group'>
-            <label>X Offset <span class='units'>(Ratio)</span></label>
+            <label>X Anchor <span class='units'>(Ratio)</span></label>
             <div class='form-fields'>
-                <input type='range' name='flags.andaels-tweaks.offset.x' value='${offset.x}' min='0' max='1' step='0.01' data-dtype='Number'>
-                <span class='range-value'>${offset.x}</span>
+                <input type='range' style='direction: rtl' name='texture.anchorX' value='${texture.anchorX}' min='0' max='1' step='0.01' data-dtype='Number'>
+                <span class='range-value'>${texture.anchorX}</span>
             </div>
         </div>
         <div class='form-group'>
-            <label>Y Offset <span class='units'>(Ratio)</span></label>
+            <label>Y Anchor <span class='units'>(Ratio)</span></label>
             <div class='form-fields'>
-                <input type='range' name='flags.andaels-tweaks.offset.y' value='${offset.y}' min='0' max='1' step='0.01' data-dtype='Number'>
-                <span class='range-value'>${offset.y}</span>
+                <input type='range' style='direction: rtl' name='texture.anchorY' value='${texture.anchorY}' min='0' max='1' step='0.01' data-dtype='Number'>
+                <span class='range-value'>${texture.anchorY}</span>
             </div>
         </div>`)
 
-    // Update the header (if there is one):
-    scaleField.closest('fieldset').find('legend').text(function(_, str)
-    {
-        return str == 'Size' ? 'Size / Offset' : ''
-    })
-
     // Resize the dialog:
     app.setPosition()
-}
-
-/**
- * Updates a token’s sprite so that the token’s offset is applied.
- * @param {Token} token Which token to update.
- */
-export function refreshPivot(token)
-{
-    const offset = getOffset(token.document)
-    if (offset)
-    {
-        const sprite = token.mesh
-        const { width, height } = sprite.texture
-        const { scaleX, scaleY } = token.document.texture
-
-        sprite.pivot.set(
-            width * (0.5 - (offset.x ?? 0.5)) / scaleX,
-            height * (0.5 - (offset.y ?? 0.5)) / scaleY
-        )
-    }
-}
-
-/**
- * Helper function for retrieving a token’s offset.
- * @param {TokenDocument} token
- */
-function getOffset(token)
-{
-    return token.flags['andaels-tweaks']?.offset
 }

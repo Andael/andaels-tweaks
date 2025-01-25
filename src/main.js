@@ -9,11 +9,6 @@ Hooks.on('renderTokenConfig', function(app)
     log(`Updated dialog ‘${app.title}’`)
 })
 
-Hooks.on('refreshToken', function(token)
-{
-    imageOffset.refreshPivot(token)
-})
-
 Hooks.on('ready', function()
 {
     log('Ready')
