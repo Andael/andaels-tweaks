@@ -1,11 +1,11 @@
-interface Hooks {
-    ready(): void
-    renderTokenConfig(app: TokenConfig, html: JQuery, options: unknown): void
-}
+// interface Hooks {
+//     ready(): void
+//     renderTokenConfig(app: TokenConfig, html: JQuery, options: unknown): void
+// }
 
-declare const Hooks: {
-    on<K extends keyof Hooks>(name: K, fn: Hooks[K]): void
-}
+// declare const Hooks: {
+//     on<K extends keyof Hooks>(name: K, fn: Hooks[K]): void
+// }
 
 interface JQuery extends ArrayLike<HTMLElement> {
     after(newHtml: string): unknown
@@ -24,31 +24,31 @@ declare const $: {
     (element: HTMLElement): JQuery
 }
 
-declare namespace foundry.data.validators {
-    export function isColorString(str: string): boolean
-}
+// declare namespace foundry.data.validators {
+//     export function isColorString(str: string): boolean
+// }
 
-interface TokenConfig {
-    element: JQuery
-    title: string
-    setPosition(): void
-}
+// interface TokenConfig {
+//     element: JQuery
+//     title: string
+//     setPosition(): void
+// }
 
-interface NotifyOptions {
-    permanent?: boolean
-    localize?: boolean
-    console?: boolean
-}
+// interface NotifyOptions {
+//     permanent?: boolean
+//     localize?: boolean
+//     console?: boolean
+// }
 
-type NotifyFunction = (message: string, options?: NotifyOptions) => number
+// type NotifyFunction = (message: string, options?: NotifyOptions) => number
 
-declare namespace ui.notifications {
-    const error: NotifyFunction
-    const warn: NotifyFunction
-}
+// declare namespace ui.notifications {
+//     const error: NotifyFunction
+//     const warn: NotifyFunction
+// }
 
-declare namespace foundry.applications.elements {
-    class HTMLColorPickerElement {
-        value: string
-    }
-}
+// declare namespace foundry.applications.elements {
+//     class HTMLColorPickerElement {
+//         value: string
+//     }
+// }

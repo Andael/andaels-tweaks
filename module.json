@@ -8,6 +8,10 @@
   "esmodules": [
     "src/main.js"
   ],
+  "styles": [
+    "src/tweaks.css"
+  ],
+  "socket": true,
 
   "title": "Andael’s Tweaks",
   "description": "A new module.",

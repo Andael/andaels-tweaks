@@ -1,0 +1,3 @@
+[submodule "foundry-vtt-types"]
+	path = foundry-vtt-types
+	url = https://github.com/League-of-Foundry-Developers/foundry-vtt-types
