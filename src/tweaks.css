@@ -38,3 +38,10 @@
 #loading {
     transform: scale(0, 0);
 }
+
+/* improve quest log */
+    /* Allow the quest details dialog to get much smaller. */
+    .window-app.forien-quest-preview {
+        min-width: 500px !important;
+        min-height: 500px !important;
+    }

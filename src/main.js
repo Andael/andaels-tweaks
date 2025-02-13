@@ -15,19 +15,87 @@ Hooks.on('renderTokenConfig',
         log(`Updated dialog ‘${app.title}’`)
     })
 
-Hooks.once('setup', function() {
-    game.keybindings.register('andaels-tweaks', 'open-quest-log', {
-        name: "Open Quest Log",
-        editable: [{ key: "KeyQ" }],
-        onDown: () => {
-            Hooks.call('ForienQuestLog.Open.QuestLog');
-            return true;
-        },
-    });
+Hooks.once('init', function() {
+    /* improve quest log */ {
+        // Add a shortcut (defaults to 'Q') for showing the Quest Log.
+        game.keybindings.register('andaels-tweaks', 'open-quest-log', {
+            name: 'Open Quest Log',
+            editable: [{ key: 'KeyQ' }],
+            onDown: () => {
+                Hooks.call('ForienQuestLog.Open.QuestLog');
+                return true;
+            },
+        });
+    }
 })
 
-Hooks.once('ready', function()
-{
+/* improve quest log */ {
+    Hooks.on('renderQuestPreview', function(_, html) {
+        html = $(html);
+
+        if (!game.user.isGM) {
+            html.find('.tabs').remove();
+            html.find('.quest-info').css({ 'flex-direction': 'column' });
+            html.find('.quest-description').css({ flex: 'initial', height: 'initial' });
+            html.find('.quest-tasks').css({ 'margin-top': 8 });
+            html.find('.quest-rewards').remove();
+        }
+    });
+}
+
+/* right-click to save without closing */ {
+    function flashWindow(app) {
+        $(app.element).find('.window-title')
+            .stop(true)
+            .css({ backgroundColor: 'green' })
+            .delay(300)
+            .queue(function() {
+                $(this).css({ backgroundColor: '' })
+            });
+    }
+
+    function onSubmitRightClicked(app, fn) {
+        $(app.element).on('contextmenu', 'button[type=submit]', fn);
+    }
+
+    Hooks.on('renderFormApplication', function(app) {
+        if (app.options.closeOnSubmit)
+            onSubmitRightClicked(app, function(event) {
+                flashWindow(app);
+
+                app._onSubmit(event, { preventClose: true });
+            })
+    })
+
+    Hooks.on('renderApplicationV2', function(app) {
+        if (app.options.tag == 'form' && app.options.form.closeOnSubmit)
+            onSubmitRightClicked(app, function(event) {
+                flashWindow(app);
+
+                const options = { ...app.options.form, closeOnSubmit: false };
+                event.currentTarget = app.element;
+                app._onSubmitForm(options, event);
+            })
+    })
+}
+
+Hooks.once('ready', function() {
+    /* improve quest log */ {
+        /* Make the quest details dialog much smaller. */
+        import('../../forien-quest-log/src/view/preview/QuestPreview.js').then(function({ QuestPreview }) {
+            let wrapped = Object.getOwnPropertyDescriptor(QuestPreview, 'defaultOptions').get;
+            Object.defineProperty(QuestPreview, 'defaultOptions', {
+                get() {
+                    return foundry.utils.mergeObject(wrapped.apply(this), {
+                        width: game.user.isGM ? 700 : 500,
+                        height: 700,
+                    });
+                }
+            });
+        });
+
+    }
+
     /* improve borders */ {
         // Make the borders circular (this makes them match this campaign’s aesthetic).
         // Also, make them scale according to the texture scale (this makes the bases smaller for
@@ -44,14 +112,13 @@ Hooks.once('ready', function()
             return rectangle.intersects(this.bounds);
         }, 'OVERRIDE');
 
-        // Make borders bigger for this campaign, since the grid size is 300:
+        // Make borders bigger for this campaign, since the grid size is 300.
         CONFIG.Canvas.objectBorderThickness = 10;
     }
 
-    foundry.applications.sheets.AmbientLightConfig.DEFAULT_OPTIONS.form.closeOnSubmit = false;
-    TooltipManager.TOOLTIP_ACTIVATION_MS = 1000
-    log('Ready')
-})
+    // foundry.applications.sheets.AmbientLightConfig.DEFAULT_OPTIONS.form.closeOnSubmit = false;
+    TooltipManager.TOOLTIP_ACTIVATION_MS = 1000;
+});
 
 let socket;
 
