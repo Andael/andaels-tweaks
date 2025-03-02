@@ -1,3 +1,7 @@
+.actors-sidebar .party.activated .party-header {
+    background: #254c84 !important;
+}
+
 #controls {
     opacity: 1 !important;
 }
