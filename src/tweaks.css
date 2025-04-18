@@ -6,7 +6,8 @@
     opacity: 1 !important;
 }
 
-#controls ol.control-tools > li.active, #controls ol.control-tools > li:hover {
+#controls ol.control-tools>li.active,
+#controls ol.control-tools>li:hover {
     border: 1px solid var(--color-border-highlight-alt) !important;
     border-bottom: 1px solid var(--color-border-highlight) !important;
     box-shadow: 0 0 10px var(--color-shadow-highlight) !important;
@@ -44,8 +45,8 @@
 }
 
 /* improve quest log */
-    /* Allow the quest details dialog to get much smaller. */
-    .window-app.forien-quest-preview {
-        min-width: 500px !important;
-        min-height: 500px !important;
-    }
+/* Allow the quest details dialog to get much smaller. */
+.window-app.forien-quest-preview {
+    min-width: 500px !important;
+    min-height: 500px !important;
+}
