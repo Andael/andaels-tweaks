@@ -15,15 +15,15 @@ export function addFieldsTo(app)
     // Find the textboxes for X and Y anchor:
     const xAnchor = app.element.find('[name="texture.anchorX"]')
     if (xAnchor.length != 1 || !(xAnchor[0] instanceof HTMLInputElement))
-        return log.error('X Anchor field not found')
+        return log.error('Field ‘texture.anchorX’ not found')
     const yAnchor = app.element.find('[name="texture.anchorY"]')
     if (yAnchor.length != 1 || !(yAnchor[0] instanceof HTMLInputElement))
-        return log.error('Y Anchor field not found')
+        return log.error('Field ‘texture.anchorY’ not found')
 
     // Find the form group containing those fields:
     const anchorGroup = xAnchor.closest('.form-group')
     if (anchorGroup[0] != yAnchor.closest('.form-group')[0])
-        return log.error('X and Y Anchor were not in the same form group')
+        return log.error('Fields ‘texture.anchorX’ and ‘texture.anchorY’ are not in the same form-group')
 
     // Update the section header if there is one (e.g. in the PF2e system):
     anchorGroup.closest('fieldset').find('legend').text(function(_, str)
