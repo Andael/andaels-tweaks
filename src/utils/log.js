@@ -26,4 +26,15 @@ log.error = function(...output)
     ui.notifications?.warn('Andael’s Tweaks encountered an error. Check the JS console for details.', { console: false })
 }
 
+/**
+ * TODO
+ * @param {object | null | undefined} condition
+ * @returns {asserts condition}
+ */
+log.assert = function(condition)
+{
+    if (!condition)
+        throw new Error("Assertion failed")
+}
+
 export default log

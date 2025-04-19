@@ -1,5 +1,6 @@
 import log from './utils/log.js'
 import * as imageOffset from './aspects/image-offset.js'
+import * as improvedQuestLog from './aspects/improved-quest-log.js'
 import * as instantTokenPreview from './aspects/instant-token-preview.js'
 
 Hooks.on('renderTokenConfig', function(app)
@@ -9,7 +10,7 @@ Hooks.on('renderTokenConfig', function(app)
     log(`Updated dialog ‘${app.title}’`)
 })
 
-Hooks.on('ready', function()
+Hooks.once('init', function blah()
 {
-    log('Ready')
+    improvedQuestLog.registerControls()
 })
