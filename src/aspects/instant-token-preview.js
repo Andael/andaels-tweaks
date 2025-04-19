@@ -18,7 +18,7 @@ export function enableFor(app)
 /**
  * Called when the [input](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event)
  * event is triggered inside a TokenConfig dialog.
- * @param {Event} evt
+ * @param {JQuery.TriggeredEvent} evt
  */
 function onFormInput(evt)
 {

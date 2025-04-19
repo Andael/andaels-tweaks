@@ -1,0 +1,8 @@
+{
+  "name": "andaels-tweaks",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "fvtt-types": "github:League-of-Foundry-Developers/foundry-vtt-types#main"
+  }
+}

@@ -23,7 +23,7 @@ function log(...output)
 log.error = function(...output)
 {
     console.error(...PREFACE, ...output)
-    ui.notifications.warn('Andael’s Tweaks encountered an error. Check the JS console for details.', { console: false })
+    ui.notifications?.warn('Andael’s Tweaks encountered an error. Check the JS console for details.', { console: false })
 }
 
 export default log
