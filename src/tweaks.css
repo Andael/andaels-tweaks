@@ -50,3 +50,25 @@
     min-width: 500px !important;
     min-height: 500px !important;
 }
+
+.application .window-content {
+    padding: 0.5rem !important;
+}
+
+.standard-form {
+    gap: .5rem !important;
+}
+
+.standard-form fieldset {
+    gap: .5rem !important;
+    padding: 5px 10px !important;
+}
+
+.application .scrollable {
+    --scroll-margin: 0.25rem !important;
+    padding-right: 0 !important;
+}
+
+.pf2e-bestiary-tracking.bestiary .monster-image.sepia {
+    filter: sepia(0.5) hue-rotate(-26deg) saturate(4) grayscale(0.5) !important;
+}
