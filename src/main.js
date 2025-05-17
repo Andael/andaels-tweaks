@@ -29,6 +29,39 @@ Hooks.once('init', function()
             },
         })
     }
+
+    /* improved waypoints */ {
+        game.keybindings.register('andaels-tweaks', 'addWaypoint', {
+            name: 'Add Waypoint (PF2e system ruler)',
+            editable: [{ key: 'Space' }],
+            onDown: () =>
+            {
+                if (canvas.ready && canvas.controls.ruler.isMeasuring && game.pf2e.settings.dragMeasurement)
+                {
+                    canvas.controls.ruler.saveWaypoint()
+                    return true
+                }
+                return false
+            },
+            precedence: CONST.KEYBINDING_PRECEDENCE.PRIORITY,
+        })
+
+        game.keybindings.register('andaels-tweaks', 'removeWaypoint', {
+            name: 'Remove Waypoint (PF2e system ruler)',
+            editable: [{ key: 'KeyX' }],
+            onDown: () =>
+            {
+                if (canvas.ready && canvas.controls.ruler.isMeasuring && game.pf2e.settings.dragMeasurement)
+                {
+                    if (canvas.controls.ruler.waypoints.length > 1)
+                        canvas.controls.ruler._removeWaypoint()
+                    return true
+                }
+                return false
+            },
+            precedence: CONST.KEYBINDING_PRECEDENCE.PRIORITY,
+        })
+    }
 })
 
 /* improve quest log */ {
@@ -90,6 +123,34 @@ Hooks.once('init', function()
     })
 }
 
+Hooks.once('libWrapper.Ready', function()
+{
+    /* improve borders */ {
+        // Make the borders circular (this makes them match this campaign’s aesthetic).
+        // Also, make them scale according to the texture scale (this makes the bases smaller for
+        // Small creatures).
+        libWrapper.register('andaels-tweaks', 'Token.prototype.getShape', function(wrapped)
+        {
+            const { width, height } = this.getSize()
+            const { scaleX, scaleY } = this.document.texture
+            if (width == height)
+                return new PIXI.Circle(width / 2, height / 2, scaleX * width / 2)
+            else
+                return wrapped()
+        }, 'MIXED')
+
+        // Patch _overlapsSelection (which doesn’t work with ellipses). We’ll just use the token’s
+        // bounds instead (even though it isn’t circular and doesn’t respect texture scale).
+        libWrapper.register('andaels-tweaks', 'Token.prototype._overlapsSelection', function(rectangle)
+        {
+            return rectangle.intersects(this.bounds)
+        }, 'OVERRIDE')
+
+        // Make borders bigger for this campaign, since the grid size is 300.
+        CONFIG.Canvas.objectBorderThickness = 10
+    }
+})
+
 Hooks.once('ready', function()
 {
     /* improve quest log */ {
@@ -108,28 +169,6 @@ Hooks.once('ready', function()
             })
         })
 
-    }
-
-    /* improve borders */ {
-        // Make the borders circular (this makes them match this campaign’s aesthetic).
-        // Also, make them scale according to the texture scale (this makes the bases smaller for
-        // Small creatures).
-        libWrapper.register('andaels-tweaks', 'Token.prototype.getShape', function()
-        {
-            const { width, height } = this.getSize()
-            const { scaleX, scaleY } = this.document.texture
-            return new PIXI.Ellipse(width / 2, height / 2, scaleX * width / 2, scaleY * height / 2)
-        }, 'OVERRIDE')
-
-        // Patch _overlapsSelection (which doesn’t work with ellipses). We’ll just use the token’s
-        // bounds instead (even though it isn’t circular and doesn’t respect texture scale).
-        libWrapper.register('andaels-tweaks', 'Token.prototype._overlapsSelection', function(rectangle)
-        {
-            return rectangle.intersects(this.bounds)
-        }, 'OVERRIDE')
-
-        // Make borders bigger for this campaign, since the grid size is 300.
-        CONFIG.Canvas.objectBorderThickness = 10
     }
 
     // foundry.applications.sheets.AmbientLightConfig.DEFAULT_OPTIONS.form.closeOnSubmit = false;
