@@ -125,6 +125,31 @@ Hooks.once('init', function()
 
 Hooks.once('libWrapper.Ready', function()
 {
+    libWrapper.register('andaels-tweaks', 'Ruler.prototype._getSegmentLabel', function(segment, totalDistance)
+    {
+        const units = canvas.scene.grid.units ?? ''
+
+        const divisionsPerUnit = 1
+
+        const distanceToRender = segment.cumulativeDistance
+
+        if (distanceToRender >= 1.0)
+            return ` ${Math.round(distanceToRender * divisionsPerUnit) / divisionsPerUnit} ${units}`
+        else
+            return ''
+
+        // if (segment.distance < 1.0)
+        //     return ''
+
+        // let label = ` ${Math.round(segment.distance * divisionsPerUnit) / divisionsPerUnit} ${units}`
+        // if (segment.last)
+        // {
+        //     if (Math.abs(segment.distance - totalDistance) >= 0.1)
+        //         label += ` [${Math.round(totalDistance * divisionsPerUnit) / divisionsPerUnit} ${units}]`
+        // }
+        // return label
+    }, 'OVERRIDE')
+
     /* improve borders */ {
         // Make the borders circular (this makes them match this campaign’s aesthetic).
         // Also, make them scale according to the texture scale (this makes the bases smaller for
