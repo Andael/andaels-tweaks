@@ -1,27 +1,172 @@
-.actors-sidebar .party.activated .party-header {
-    background: #254c84 !important;
+@layer exceptions {
+
+    body.theme-light {
+        --glass-bg-color: rgba(255 255 255 / 0.3);
+        --glass-hover-bg-color: rgba(255 255 255 / 0.5);
+        --glass-active-bg-color: rgba(255 255 255 / 0.5);
+        --glass-fg-color: rgba(0 0 0 / 0.6);
+        --glass-hover-fg-color: rgba(0 0 0 / 0.65);
+        --glass-active-fg-color: rgba(0 0 0 / 0.9);
+    }
+
+    body {
+        --glass-backdrop-filter: none;
+        --glass-backdrop-filter: blur(10px);
+        --glass-radius: 5px;
+        --glass-border: solid 1px var(--glass-bg-color);
+        --glass-border-offset: -1px;
+    }
+
+    #hotbar-controls-left,
+    #hotbar-controls-right div {
+        display: none;
+    }
+
+    #scene-controls menu {
+        height: auto;
+        align-self: flex-start;
+    }
+
+    #scene-controls menu,
+    #sidebar-tabs menu,
+    #roll-privacy {
+        gap: 0;
+        backdrop-filter: var(--glass-backdrop-filter);
+        border-radius: var(--glass-radius);
+        outline: var(--glass-border);
+        outline-offset: var(--glass-border-offset);
+        overflow: hidden;
+    }
+
+    #scene-controls button,
+    #sidebar-tabs button,
+    #roll-privacy button {
+        border-color: transparent;
+        border-radius: 0;
+        transition: background-color 0.25s;
+        --control-bg-color: var(--glass-bg-color);
+        --control-hover-bg-color: var(--glass-hover-bg-color);
+        --control-active-bg-color: var(--glass-active-bg-color);
+        --control-icon-color: var(--glass-fg-color);
+        --control-hover-icon-color: var(--glass-hover-fg-color);
+        --control-active-icon-color: var(--glass-active-fg-color);
+    }
+
+    #scene-controls button,
+    #sidebar-tabs button,
+    #roll-privacy.vertical button {
+        margin-bottom: -1px;
+    }
+
+    #roll-privacy:not(.vertical) button {
+        margin-right: -1px;
+    }
+
+    #scene-controls button.gm-vision {
+        --control-bg-color: rgba(71, 51, 255, 0.33);
+        --control-hover-bg-color: rgba(71, 51, 255, 0.66);
+        --control-icon-color: rgb(232, 229.5, 255);
+        --control-hover-icon-color: rgb(232, 229.5, 255);
+    }
+
+    #scene-controls button.toggle[aria-pressed=true] {
+        --control-active-bg-color: rgba(71, 51, 255, 0.3);
+        --control-active-icon-color: rgb(232, 229.5, 255);
+        cursor: pointer;
+    }
+
+    #scene-controls button.toggle[aria-pressed=true]:hover {
+        --control-active-bg-color: rgba(71, 51, 255, 0.66);
+    }
+
+    #scene-controls .ui-control.button {
+        --control-hover-bg-color: rgba(250, 150, 100, 0.66);
+    }
+
+    #scene-controls li:last-child button,
+    #sidebar-tabs li:last-child button,
+    #roll-privacy button:last-child {
+        margin: 0;
+    }
+
+    #interface #chat-message {
+        backdrop-filter: var(--glass-backdrop-filter);
+        border-radius: var(--glass-radius);
+        border: var(--glass-border);
+        height: auto;
+        transition: background 0.5s, box-shadow 0.5s;
+        padding: 8px;
+        box-shadow: 0 0 10px transparent;
+        background: var(--glass-bg-color);
+        --input-placeholder-color: var(--glass-fg-color);
+    }
+
+    #interface #chat-message::placeholder {
+        font-weight: 100;
+        font-style: normal;
+        transition: color 0.5s;
+    }
+
+    #interface #chat-message:hover {
+        background: var(--glass-hover-bg-color);
+        --input-placeholder-color: var(--glass-hover-fg-color);
+    }
+
+    #interface #chat-message:focus {
+        background: var(--glass-active-bg-color);
+        outline: none;
+        box-shadow: 0 0 10px black;
+    }
+
+    #interface #chat-message:focus::placeholder {
+        opacity: 0;
+    }
+
+    #chat-popout #roll-privacy {
+        backdrop-filter: none;
+    }
+
+    #interface a.ui-control {
+        backdrop-filter: var(--glass-backdrop-filter);
+        /* background: red; */
+    }
+
+    #interface li.ui-control {
+        backdrop-filter: var(--glass-backdrop-filter);
+        /* background: red; */
+    }
+
+    /* macro bar buttons */
+    #hotbar .slot {
+        backdrop-filter: var(--glass-backdrop-filter);
+    }
+
+    /* token controls */
+    .placeable-hud .control-icon,
+    .placeable-hud input,
+    .placeable-hud .palette {
+        backdrop-filter: var(--glass-backdrop-filter);
+    }
+
+    .actors-sidebar .parties {
+        --color-pf-primary: #254c84;
+    }
+
+    #players-active {
+        display: none;
+    }
+
 }
 
-#controls {
-    opacity: 1 !important;
-}
+/* .window-app { */
+/* backdrop-filter: blur(5px) !important; */
+/* -webkit-backdrop-filter: blur(5px) !important; */
+/* } */
 
-#controls ol.control-tools>li.active,
-#controls ol.control-tools>li:hover {
-    border: 1px solid var(--color-border-highlight-alt) !important;
-    border-bottom: 1px solid var(--color-border-highlight) !important;
-    box-shadow: 0 0 10px var(--color-shadow-highlight) !important;
-}
-
-.window-app {
-    backdrop-filter: blur(5px) !important;
-    -webkit-backdrop-filter: blur(5px) !important;
-}
-
-.journal-sheet.sevendooms-wrapper:not(.minimized).window-app {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-}
+/* .journal-sheet.sevendooms-wrapper:not(.minimized).window-app { */
+/* backdrop-filter: none !important; */
+/* -webkit-backdrop-filter: none !important; */
+/* } */
 
 #andael-area-title {
     position: absolute;
@@ -40,17 +185,17 @@
     background: black;
 }
 
-#loading {
+#notifications .notification.info.permanent.progress {
     transform: scale(0, 0);
 }
 
 /* improve quest log */
 /* Allow the quest details dialog to get much smaller. */
+/*
 .window-app.forien-quest-preview {
     min-width: 500px !important;
     min-height: 500px !important;
 }
-
 .application .window-content {
     padding: 0.5rem !important;
 }
@@ -72,3 +217,5 @@
 .pf2e-bestiary-tracking.bestiary .monster-image.sepia {
     filter: sepia(0.5) hue-rotate(-26deg) saturate(4) grayscale(0.5) !important;
 }
+
+*/

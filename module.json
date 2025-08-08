@@ -1,8 +1,11 @@
 {
-  "name": "andaels-tweaks",
+  "id": "andaels-tweaks",
+  "title": "Andael’s Tweaks",
+  "version": "1.0.0",
+
   "compatibility": {
-    "minimum": "12.331",
-    "verified": "12.331"
+    "minimum": "13",
+    "verified": "13"
   },
 
   "esmodules": [
@@ -11,15 +14,5 @@
   "styles": [
     "src/tweaks.css"
   ],
-  "socket": true,
-
-  "title": "Andael’s Tweaks",
-  "description": "A new module.",
-  "authors": [{
-    "name": "Andael",
-    "url": "https://github.com/Andael"
-  }],
-  "url": "https://github.com/Andael/andaels-tweaks",
-
-  "version": "develop"
+  "socket": true
 }
