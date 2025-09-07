@@ -1,10 +1,9 @@
 {
+  "$schema": "https://www.schemastore.org/foundryvtt-module-manifest.json",
   "id": "andaels-tweaks",
-  "compatibility": {
-    "minimum": "13.348",
-    "verified": "13.348"
-  },
-
+  "title": "Andael’s Tweaks",
+  "description": "",
+  "version": "develop",
   "esmodules": [
     "src/main.js"
   ],
@@ -12,14 +11,33 @@
     "src/tweaks.css"
   ],
   "socket": true,
-
-  "title": "Andael’s Tweaks",
-  "description": "A new module.",
-  "authors": [{
-    "name": "Andael",
-    "url": "https://github.com/Andael"
-  }],
-  "url": "https://github.com/Andael/andaels-tweaks",
-
-  "version": "develop"
+  "compatibility": {
+    "minimum": "13.348",
+    "verified": "13.348"
+  },
+  "relationships": {
+    "requires": [
+      {
+        "id": "disable-mouse-wheel-sliders",
+        "type": "module",
+        "compatibility": {
+          "minimum": "3.0.0"
+        }
+      },
+      {
+        "id": "force-client-settings",
+        "type": "module",
+        "compatibility": {
+          "minimum": "2.6.0"
+        }
+      },
+      {
+        "id": "zoom-pan-options",
+        "type": "module",
+        "compatibility": {
+          "minimum": "2.0.2"
+        }
+      }
+    ]
+  }
 }
