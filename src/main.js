@@ -1,6 +1,5 @@
 import log from "./core/log.js"
-
-const MODULE_ID = "andaels-tweaks"
+import { RemoveWaypoint } from "./small/RemoveWaypoint.js"
 
 class SetWorldSettings extends foundry.applications.api.DialogV2
 {
@@ -36,29 +35,8 @@ Hooks.once("init", function()
         restricted: true,
     })
 
-    game.keybindings.register("andaels-tweaks", "removeWaypoint", {
-        name: "Remove Waypoint",
-        editable: [{ key: "KeyX" }],
-        onDown: removeWaypoint,
-    })
+    RemoveWaypoint.register()
 })
-
-/**
- * @param {any} ctx
- */
-function removeWaypoint(ctx)
-{
-    const layer = canvas.activeLayer
-    if (layer instanceof foundry.canvas.layers.TokenLayer)
-    {
-        if (layer._draggedToken)
-        {
-            layer._draggedToken._onDragClickRight(ctx.event)
-            return true
-        }
-    }
-    return false
-}
 
 async function applyAllSettings()
 {
