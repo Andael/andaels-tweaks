@@ -1,8 +1,4 @@
-## Modules to try
-- Argon Combat HUD
-
 ## Movement related
-- Remove last waypoint with X or Backspace
 - Shift+Q/E moves 0.5’ just like when dragging
 
 ## Cosmetic

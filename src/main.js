@@ -35,7 +35,30 @@ Hooks.once("init", function()
         type: SetWorldSettings,
         restricted: true,
     })
+
+    game.keybindings.register("andaels-tweaks", "removeWaypoint", {
+        name: "Remove Waypoint",
+        editable: [{ key: "KeyX" }],
+        onDown: removeWaypoint,
+    })
 })
+
+/**
+ * @param {any} ctx
+ */
+function removeWaypoint(ctx)
+{
+    const layer = canvas.activeLayer
+    if (layer instanceof foundry.canvas.layers.TokenLayer)
+    {
+        if (layer._draggedToken)
+        {
+            layer._draggedToken._onDragClickRight(ctx.event)
+            return true
+        }
+    }
+    return false
+}
 
 async function applyAllSettings()
 {

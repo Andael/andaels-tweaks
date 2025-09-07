@@ -1,3 +1,4 @@
+declare const canvas: any
 declare const ForceClientSettings: any
 declare const foundry: any
 declare const game: any
