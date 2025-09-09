@@ -2,7 +2,6 @@
 - Shift+Q/E moves 0.5’ just like when dragging
 
 ## Cosmetic
-- Rotate manually with R
 - Round ruler measurements to 0dp
 
 ## Targeting

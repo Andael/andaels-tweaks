@@ -1,5 +1,5 @@
 import log from "./core/log.js"
-import { RemoveWaypoint } from "./small/RemoveWaypoint.js"
+import { RemoveWaypointBinding } from "./small/RemoveWaypointBinding.js"
 
 class SetWorldSettings extends foundry.applications.api.DialogV2
 {
@@ -35,7 +35,7 @@ Hooks.once("init", function()
         restricted: true,
     })
 
-    RemoveWaypoint.register()
+    RemoveWaypointBinding.register()
 })
 
 async function applyAllSettings()

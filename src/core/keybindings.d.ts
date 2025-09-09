@@ -5,8 +5,11 @@ declare namespace game.keybindings
     interface KeybindingActionConfig
     {
         name: string
+        hint?: string
         editable: KeybindingActionBinding[]
-        onDown(context: KeyboardEventContext): boolean
+        onDown?(context: KeyboardEventContext): boolean
+        onUp?(context: KeyboardEventContext): boolean
+        precedence?: 0 | 1 | 2
     }
 
     interface KeybindingActionBinding
