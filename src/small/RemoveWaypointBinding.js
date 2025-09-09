@@ -1,15 +1,14 @@
 import { MODULE_ID } from "../core/meta.js"
 
 /**
- * @returns {any | void}
+ * @returns {Token | null}
  */
 function getDraggedToken()
 {
     const activeLayer = canvas.activeLayer
     if (activeLayer instanceof foundry.canvas.layers.TokenLayer)
-    {
         return activeLayer._draggedToken
-    }
+    return null
 }
 
 export class RemoveWaypointBinding
