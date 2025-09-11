@@ -1,4 +1,5 @@
 import log from "./core/log.js"
+import { LookAtTargets } from "./small/LookAtTargets.js"
 import { RemoveWaypointBinding } from "./small/RemoveWaypointBinding.js"
 
 class SetWorldSettings extends foundry.applications.api.DialogV2
@@ -37,6 +38,8 @@ Hooks.once("init", function()
 
     RemoveWaypointBinding.register()
 })
+
+LookAtTargets.registerHooks()
 
 async function applyAllSettings()
 {

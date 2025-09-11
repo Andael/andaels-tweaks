@@ -1,11 +1,36 @@
 declare const ForceClientSettings: any
-declare const Hooks: any
 declare const libWrapper: any
 declare const ui: any
 
 declare namespace canvas
 {
     const activeLayer: unknown
+    const scene: Scene
+}
+
+declare namespace Hooks
+{
+    function on<K extends keyof StaticHooks>(hook: K, callback: StaticHooks[K]): void
+}
+
+interface Math
+{
+    normalizeDegrees(angle: number): number
+}
+
+interface User
+{
+    character: Actor
+}
+
+interface Actor
+{
+    getActiveTokens(): Token[]
+}
+
+declare namespace game
+{
+    const user: User
 }
 
 declare namespace foundry.canvas.layers
@@ -16,8 +41,8 @@ declare namespace foundry.canvas.layers
     }
 }
 
-interface Token
+interface Point
 {
-    _removeDragWaypoint(): void
-    _triggerDragLeftCancel(): void
+    x: number
+    y: number
 }

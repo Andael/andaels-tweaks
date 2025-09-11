@@ -4,10 +4,6 @@
 ## Cosmetic
 - Round ruler measurements to 0dp
 
-## Targeting
-- A method for targeting with T
-- Automatically change direction when targeting
-
 ## Aim distance
 - Subtract base size differences when calculating aim distance
 - Say “adjacent” instead of 5 ft (or 7 ft)
