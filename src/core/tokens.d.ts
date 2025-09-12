@@ -9,7 +9,10 @@ interface Token
 
 interface TokenDocument
 {
+    elevation: number
     rotation: number
+    width: number
+    height: number
 }
 
 declare namespace canvas.tokens

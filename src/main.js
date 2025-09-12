@@ -1,4 +1,5 @@
 import log from "./core/log.js"
+import { TokenDistanceCalulation } from "./small/TokenDistanceCalulation.js"
 import { LookAtTargets } from "./small/LookAtTargets.js"
 import { RemoveWaypointBinding } from "./small/RemoveWaypointBinding.js"
 
@@ -26,6 +27,11 @@ class SetWorldSettings extends foundry.applications.api.DialogV2
         })
     }
 }
+
+Hooks.once("libWrapper.Ready", function()
+{
+    TokenDistanceCalulation.applyFix()
+})
 
 Hooks.once("init", function()
 {
