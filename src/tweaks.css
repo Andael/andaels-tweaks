@@ -1,3 +1,7 @@
-#controls {
-    opacity: 0 !important;
+#pause {
+    margin: 10px 0;
+}
+
+#pause figcaption {
+    letter-spacing: normal !important;
 }

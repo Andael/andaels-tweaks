@@ -18,6 +18,3 @@
 - Don’t automatically pop open the tracker. In fact, try to never need to use the tracker.
 - See if there are any modules for tracking ACTIONS.
 - Group initiative.
-
-## Loading-related
-- Show tips on loading screens and the pause overlay

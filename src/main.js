@@ -2,6 +2,7 @@ import log from "./core/log.js"
 import { TokenDistanceCalulation } from "./small/TokenDistanceCalulation.js"
 import { LookAtTargets } from "./small/LookAtTargets.js"
 import { RemoveWaypointBinding } from "./small/RemoveWaypointBinding.js"
+import { MODULE_ID } from "./core/meta.js"
 
 class SetWorldSettings extends foundry.applications.api.DialogV2
 {
@@ -45,12 +46,22 @@ Hooks.once("init", function()
     RemoveWaypointBinding.register()
 })
 
+/** @type {any} */
+let socket
+
+Hooks.once("socketlib.ready", function()
+{
+    socket = socketlib.registerModule(MODULE_ID)
+})
+
 LookAtTargets.registerHooks()
 
 async function applyAllSettings()
 {
     try
     {
+        // game.settings.set("healthEstimate", "core.menuSettings.gradient", { colors:['#FF0000','#FFC403','#FFFF00','#FFFF00','#00FF00'], positions:[0,0.49,0.51,0.75,1] })
+
         await game.settings.set("disable-mouse-wheel-sliders", "disable-mouse-wheel-inputs", true)
         await ForceClientSettings.forceSetting("disable-mouse-wheel-sliders.disable-mouse-wheel-inputs", "soft")
 
