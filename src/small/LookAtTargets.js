@@ -6,11 +6,10 @@ const RAD_TO_DEG = 360.0 / (Math.PI * 2.0)
  */
 function registerHooks()
 {
-    Hooks.on("targetToken", function(_, target, wasTargetAdded)
+    Hooks.on("targetToken", function(user, target, wasTargetAdded)
     {
-        if (!wasTargetAdded)
-            return
-        onTokenTargeted(target)
+        if (user == game.user && wasTargetAdded)
+            onTokenTargeted(target)
     })
 }
 
