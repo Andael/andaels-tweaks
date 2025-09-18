@@ -4,6 +4,8 @@ import { LookAtTargets } from "./small/LookAtTargets.js"
 import { RemoveWaypointBinding } from "./small/RemoveWaypointBinding.js"
 import { MODULE_ID } from "./core/meta.js"
 
+window.andael = {}
+
 class SetWorldSettings extends foundry.applications.api.DialogV2
 {
     constructor()
@@ -32,6 +34,22 @@ class SetWorldSettings extends foundry.applications.api.DialogV2
 Hooks.once("libWrapper.Ready", function()
 {
     TokenDistanceCalulation.applyFix()
+
+    libWrapper.register('andaels-tweaks', 'Token.prototype.getShape', function(wrapped)
+    {
+        if (!this.scene.grid.isGridless || this.document.shape != 0)
+            return wrapped()
+
+        const { width } = this.document.getSize()
+        const { scaleX } = this.document.texture
+        return new PIXI.Circle(width / 2, width / 2, Math.abs(scaleX) * width / 2)
+    }, 'MIXED')
+})
+
+Hooks.on("refreshToken", function(token)
+{
+    if (token.document.shape == 4)
+        token.document.update({ shape: 0 })
 })
 
 Hooks.once("init", function()
@@ -52,7 +70,74 @@ let socket
 Hooks.once("socketlib.ready", function()
 {
     socket = socketlib.registerModule(MODULE_ID)
+    socket.register('showAreaTitle', showAreaTitle)
+    socket.register('coverCanvas', coverCanvas)
+
+    let lastRegionTitle
+    window.andael.setRegionTitle = function(event, title)
+    {
+        if (event.user.id != game.user.id)
+            return
+
+        if (lastRegionTitle != title)
+        {
+            showAreaTitle(title)
+            lastRegionTitle = title
+        }
+    }
+
+    window.andael.showAreaTitle = function(title)
+    {
+        if (game.user.isGM)
+            socket.executeForEveryone('showAreaTitle', title)
+    }
+
+    window.andael.coverCanvas = function(cover, time)
+    {
+        if (game.user.isGM)
+            socket.executeForEveryone('coverCanvas', cover, time)
+    }
 })
+
+function showAreaTitle(title)
+{
+    let element = $('#andael-area-title')
+    if (!element.length)
+        element = $('<div id="andael-area-title"></div>').appendTo($('body'))
+
+    element
+        .stop(true)
+        .hide()
+
+    element.text(title)
+        .fadeIn(1000)
+        .delay(4000)
+        .fadeOut(1000)
+}
+
+/**
+ *
+ * @param {boolean} cover
+ * @param {number} ms
+ * @returns {Promise}
+ */
+function coverCanvas(cover, ms)
+{
+    let element = $('#andael-canvas-cover')
+    if (!element.length)
+        element = $('<div id="andael-canvas-cover" style="display: none;"></div>').appendTo($('body'))
+
+    element
+        .stop(true)
+
+    return new Promise((resolve) =>
+    {
+        if (cover)
+            element.fadeIn(ms, 'swing', resolve)
+        else
+            element.fadeOut(ms, 'swing', resolve)
+    })
+}
 
 LookAtTargets.registerHooks()
 

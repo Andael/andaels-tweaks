@@ -18,3 +18,12 @@
 - Don’t automatically pop open the tracker. In fact, try to never need to use the tracker.
 - See if there are any modules for tracking ACTIONS.
 - Group initiative.
+
+## Fancy automation
+- Elevation map
+
+## Fancy graphics
+- Tool for catching things on fire, including smoke which renders above the fog
+- Animated foliage, canopy layers for foliage
+- Fade transition when changing scene
+- Title display when changing scene

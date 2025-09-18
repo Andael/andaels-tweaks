@@ -5,3 +5,24 @@
 #pause figcaption {
     letter-spacing: normal !important;
 }
+
+.notification.info.progress {
+    display: none !important;
+}
+
+#andael-area-title {
+    position: absolute;
+    color: white;
+    left: 15%;
+    bottom: 15%;
+    font: 61px 'Modesto Condensed';
+}
+
+#andael-canvas-cover {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: black;
+}
