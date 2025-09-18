@@ -16,6 +16,38 @@
     left: 15%;
     bottom: 15%;
     font: 61px 'Modesto Condensed';
+    text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.7);
+    pointer-events: none;
+}
+
+#andael-chapter-title {
+    position: absolute;
+    background: black;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font: 61px 'Vollkorn';
+    line-height: 1.2em;
+    letter-spacing: -1px;
+    z-index: 999;
+}
+
+#andael-chapter-title>div:first-child {
+    font-size: 0.6em;
+    background: linear-gradient(to bottom, #FBD644, #CD8334);
+    background-clip: text;
+    color: transparent;
+}
+
+#andael-chapter-title>div:last-child {
+    background: linear-gradient(to bottom, #FBD644, #F14413);
+    background-clip: text;
+    color: transparent;
 }
 
 #andael-canvas-cover {

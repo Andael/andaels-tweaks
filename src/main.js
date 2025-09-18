@@ -44,7 +44,37 @@ Hooks.once("libWrapper.Ready", function()
         const { scaleX } = this.document.texture
         return new PIXI.Circle(width / 2, width / 2, Math.abs(scaleX) * width / 2)
     }, 'MIXED')
+
+    libWrapper.register(MODULE_ID, "Scene.prototype.view", async function(wrapped)
+    {
+        if (this == canvas.scene)
+            return await wrapped()
+
+        await coverCanvas(true, 350)
+        await wrapped()
+        await delay(16)
+        await coverCanvas(false, 1000)
+
+        await delay(650)
+        if (this == canvas.scene && !this.getFlag(MODULE_ID, "noAreaTitle"))
+        {
+            if (this.navName?.length)
+                showAreaTitle(this.navName)
+            else
+                showAreaTitle(this.name)
+        }
+
+        return this
+    }, "WRAPPER")
 })
+
+function delay(ms)
+{
+    return new Promise(resolve =>
+    {
+        window.setTimeout(resolve, ms)
+    })
+}
 
 Hooks.on("refreshToken", function(token)
 {
@@ -71,6 +101,7 @@ Hooks.once("socketlib.ready", function()
 {
     socket = socketlib.registerModule(MODULE_ID)
     socket.register('showAreaTitle', showAreaTitle)
+    socket.register('showChapterTitle', showChapterTitle)
     socket.register('coverCanvas', coverCanvas)
 
     let lastRegionTitle
@@ -90,6 +121,12 @@ Hooks.once("socketlib.ready", function()
     {
         if (game.user.isGM)
             socket.executeForEveryone('showAreaTitle', title)
+    }
+
+    window.andael.showChapterTitle = function(h1, h2)
+    {
+        if (game.user.isGM)
+            socket.executeForEveryone("showChapterTitle", h1, h2)
     }
 
     window.andael.coverCanvas = function(cover, time)
@@ -115,6 +152,31 @@ function showAreaTitle(title)
         .fadeOut(1000)
 }
 
+async function showChapterTitle(h1, h2)
+{
+    let element = $("#andael-chapter-title")
+    if (!element.length)
+        element = $("<div id='andael-chapter-title'><div></div><div></div></div>").appendTo($("body"))
+
+    const bothDivs = element.find("div")
+    const div1 = element.find("div:first-child")
+    const div2 = element.find("div:last-child")
+
+    element.stop(true).hide()
+    bothDivs.stop(true).show().css({ opacity: 0 })
+
+    div1.text(h1)
+    div2.text(h2)
+
+    element.fadeIn(1000)
+    div1.delay(1500).animate({ opacity: 1 }, 1000)
+    div2.delay(3500).animate({ opacity: 1 }, 1000)
+
+    await delay(7500)
+    bothDivs.fadeOut(1000)
+    element.delay(1000).fadeOut(3000)
+}
+
 /**
  *
  * @param {boolean} cover
@@ -133,9 +195,9 @@ function coverCanvas(cover, ms)
     return new Promise((resolve) =>
     {
         if (cover)
-            element.fadeIn(ms, 'swing', resolve)
+            element.fadeIn(ms, 'linear', resolve)
         else
-            element.fadeOut(ms, 'swing', resolve)
+            element.fadeOut(ms, 'linear', resolve)
     })
 }
 
