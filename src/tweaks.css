@@ -13,8 +13,8 @@
 #andael-area-title {
     position: absolute;
     color: white;
-    left: 15%;
-    bottom: 15%;
+    left: 130px;
+    bottom: 170px;
     font: 61px 'Modesto Condensed';
     text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.7);
     pointer-events: none;

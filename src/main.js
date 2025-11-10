@@ -45,9 +45,9 @@ Hooks.once("libWrapper.Ready", function()
         return new PIXI.Circle(width / 2, width / 2, Math.abs(scaleX) * width / 2)
     }, 'MIXED')
 
-    libWrapper.register(MODULE_ID, "Scene.prototype.view", async function(wrapped)
+    libWrapper.register(MODULE_ID, "Scene.prototype.view", async function(wrapped, noAnim)
     {
-        if (this == canvas.scene)
+        if (noAnim || this == canvas.scene)
             return await wrapped()
 
         await coverCanvas(true, 350)
@@ -123,10 +123,12 @@ Hooks.once("socketlib.ready", function()
             socket.executeForEveryone('showAreaTitle', title)
     }
 
-    window.andael.showChapterTitle = function(h1, h2)
+    window.andael.showChapterTitle = async function(h1, h2, nextMap)
     {
         if (game.user.isGM)
-            socket.executeForEveryone("showChapterTitle", h1, h2)
+        {
+            socket.executeForEveryone("showChapterTitle", h1, h2, nextMap)
+        }
     }
 
     window.andael.coverCanvas = function(cover, time)
@@ -152,7 +154,7 @@ function showAreaTitle(title)
         .fadeOut(1000)
 }
 
-async function showChapterTitle(h1, h2)
+async function showChapterTitle(h1, h2, nextMap)
 {
     let element = $("#andael-chapter-title")
     if (!element.length)
@@ -172,7 +174,10 @@ async function showChapterTitle(h1, h2)
     div1.delay(1500).animate({ opacity: 1 }, 1000)
     div2.delay(3500).animate({ opacity: 1 }, 1000)
 
-    await delay(7500)
+    await delay(5000)
+    game.scenes.get(nextMap).view(true)
+
+    await delay(2500)
     bothDivs.fadeOut(1000)
     element.delay(1000).fadeOut(3000)
 }
